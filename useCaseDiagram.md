@@ -1,87 +1,62 @@
-📌 Use Case Diagram – CareerOS (Proof-Based Career Engine)
-Actors
+# Use Case Diagram
 
-Student
+The Use Case Diagram highlights the interactions between the users (Employees/HR) and the Candidate Referral Management System.
 
-Admin
+## 👤 Actors
 
-GitHub API (External System)
+1.  **Employee/Recruiter (User)**: The primary actor who interacts with the dashboard.
+2.  **System**: Handles validation, storage, and retrieval of data.
+3.  **Database (MongoDB)**: Stores persistent candidate information.
 
-Scoring Engine (Internal Service)
+## 🎯 Use Cases
 
-Student Use Cases
+### User Use Cases
+-   **Add Referral**: Submit a new candidate with contact info and resume.
+-   **View Dashboard**: See a list of all current referrals.
+-   **Search Candidates**: Filter candidates by name, job title, or status.
+-   **Update Status**: Change the pipeline stage of a candidate.
+-   **Delete Referral**: Remove a candidate from the system.
+-   **View Resume**: Open and read the candidate's PDF resume.
 
-Register via GitHub
+### System Use Cases
+-   **Validate Input**: Check for valid email, phone, and file formats.
+-   **Manage Storage**: Handle PDF file uploads securely.
+-   **Maintain Database**: Perform CRUD operations on the Candidate collection.
 
-Login
+## 🧬 Mermaid Diagram
 
-Select Career Goal
+```mermaid
+useCaseDiagram
+    actor User
+    actor System
+    actor MongoDB
 
-View Dashboard
+    package "Candidate Referral System" {
+        usecase "Add Referral" as UC1
+        usecase "View Dashboard" as UC2
+        usecase "Search Candidates" as UC3
+        usecase "Update Status" as UC4
+        usecase "Delete Referral" as UC5
+        usecase "View Resume" as UC6
+        usecase "Validate Data" as UC7
+        usecase "Store Resume" as UC8
+    }
 
-View Milestones
+    User --> UC1
+    User --> UC2
+    User --> UC3
+    User --> UC4
+    User --> UC5
+    User --> UC6
 
-Complete Task
+    UC1 ..> UC7 : <<include>>
+    UC1 ..> UC8 : <<include>>
 
-Sync GitHub
-
-Track Streak
-
-View Readiness Score
-
-Unlock Next Milestone
-
-View Proof Profile
-
-Admin Use Cases
-
-Login
-
-Create Goal
-
-Create Milestone
-
-Create Tasks
-
-Monitor User Progress
-
-Update Goal Structure
-
-View Platform Analytics
-
-GitHub API Use Cases (External System)
-
-Authenticate User (OAuth)
-
-Provide Repository Data
-
-Provide Commit History
-
-Provide Pull Request Data
-
-Scoring Engine Use Cases
-
-Calculate GitHub Score
-
-Calculate Project Score
-
-Calculate DSA Score
-
-Generate Overall Readiness Score
-
-Update User Progress Status
-
-Diagram (Textual Representation)
-
-Student → (Register via GitHub)
-Student → (Select Goal)
-Student → (Complete Task)
-Student → (Sync GitHub)
-Student → (View Readiness Score)
-
-Admin → (Create Goal)
-Admin → (Create Milestone)
-Admin → (Monitor Users)
-
-System → GitHub API (Fetch Repository Data)
-System → Scoring Engine (Calculate Readiness Score)
+    UC1 --> MongoDB
+    UC2 --> MongoDB
+    UC4 --> MongoDB
+    UC5 --> MongoDB
+    
+    System --> UC7
+    System --> UC8
+```

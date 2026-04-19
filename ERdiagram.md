@@ -1,135 +1,43 @@
-🗄️ ER Diagram – CareerOS (Proof-Based Career Engine)
-Entities
-User
+# Entity Relationship Diagram (ERD)
 
-id (PK)
+## 📊 Database Schema
 
-name
+The system uses MongoDB (NoSQL) to store candidate data. The schema is designed for quick access and efficient status tracking.
 
-email (unique)
+### Entity: Candidate
 
-github_id (unique)
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `_id` | ObjectId | Primary Key (Auto-generated) |
+| `name` | String | Full name of the candidate |
+| `email` | String | Unique email address |
+| `phone` | String | 10-digit Indian phone number |
+| `jobTitle` | String | Position for which the candidate is referred |
+| `status` | String | Current pipeline stage (Pending, Reviewed, Hired) |
+| `resumeUrl` | String | Local path or Cloud URL to the uploaded PDF |
+| `createdAt` | Date | Timestamp of record creation |
+| `updatedAt` | Date | Timestamp of last modification |
 
-avatar_url
+## 🧬 Mermaid Diagram
 
-role (student/admin)
+```mermaid
+erDiagram
+    CANDIDATE {
+        ObjectId _id PK
+        string name
+        string email
+        string phone
+        string jobTitle
+        string status
+        string resumeUrl
+        datetime createdAt
+        datetime updatedAt
+    }
+```
 
-created_at
+## 📝 Relationship Explanation
 
-updated_at
+Currently, the system is designed as a standalone **Candidate** entity tracking system. 
 
-Goal
-
-id (PK)
-
-title
-
-description
-
-difficulty_level
-
-created_at
-
-Milestone
-
-id (PK)
-
-title
-
-description
-
-order_index
-
-goal_id (FK → Goal.id)
-
-Task
-
-id (PK)
-
-type (video/project/dsa/github)
-
-requirement
-
-milestone_id (FK → Milestone.id)
-
-UserGoal
-
-id (PK)
-
-user_id (FK → User.id)
-
-goal_id (FK → Goal.id)
-
-started_at
-
-status (active/completed)
-
-Progress
-
-id (PK)
-
-user_id (FK → User.id)
-
-milestone_id (FK → Milestone.id)
-
-completion_percentage
-
-completed (boolean)
-
-completed_at
-
-GitHubData
-
-id (PK)
-
-user_id (FK → User.id)
-
-total_commits
-
-total_repositories
-
-total_pull_requests
-
-last_synced
-
-Streak
-
-id (PK)
-
-user_id (FK → User.id)
-
-current_streak
-
-longest_streak
-
-last_activity_date
-
-ReadinessScore
-
-id (PK)
-
-user_id (FK → User.id)
-
-github_score
-
-project_score
-
-dsa_score
-
-overall_score
-
-calculated_at
-
-Relationships
-
-User 1 — M UserGoal
-User 1 — M Progress
-User 1 — 1 GitHubData
-User 1 — 1 Streak
-User 1 — 1 ReadinessScore
-
-Goal 1 — M Milestone
-Milestone 1 — M Task
-
-User M — M Goal (via UserGoal)
-User M — M Milestone (via Progress)
+- **Status Field**: Acts as the state-machine transition indicator for the candidate through the HR process.
+- **Resume Linking**: The `resumeUrl` links the database record to the physical file stored in the `backend/uploads/` directory on the server.
