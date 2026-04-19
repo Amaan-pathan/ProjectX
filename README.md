@@ -522,5 +522,4 @@ Error: Only PDF files are allowed
 
 ---
 
-**Last Updated:** February 8, 2025
 **Version:** 1.0.0
